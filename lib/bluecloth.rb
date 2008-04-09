@@ -769,7 +769,7 @@ class BlueCloth < String
 		text = ''
 
 		# Scan the whole string
-		until @scanner.empty?
+		until @scanner.eos?
 		
 			if @scanner.scan( /\[/ )
 				link = ''; linkid = ''
@@ -898,7 +898,7 @@ class BlueCloth < String
 		text = ''
 
 		# Scan to the end of the string
-		until @scanner.empty?
+		until @scanner.eos?
 
 			# Scan up to an opening backtick
 			if pre = @scanner.scan_until( /.?(?=`)/m )
@@ -966,7 +966,7 @@ class BlueCloth < String
 
 	### Turn image markup into image tags.
 	def transform_images( str, rs )
-		@log.debug " Transforming images" % str
+		@log.debug " Transforming images" # % str
 
 		# Handle reference-style labeled images: ![alt text][id]
 		str.
@@ -1066,7 +1066,7 @@ class BlueCloth < String
 		@scanner.string = str.dup
 		type, token = nil, nil
 
-		until @scanner.empty?
+		until @scanner.eos?
 			@log.debug "Scanning from %p" % @scanner.rest
 
 			# Match comments and PIs without nesting
