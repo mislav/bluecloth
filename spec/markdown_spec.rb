@@ -50,16 +50,12 @@ class SampleMatcher
   end
   
   def failure_message
-    msg = <<-MSG
-    #{@sample.comment} (line #{@sample.line}):
-    <<<
-    #{@sample.input}---
-    #{@sample.output}>>>
-    #{@result}===
-    MSG
-    indent = ' ' * 4
-    msg.gsub!(/\n(\S)/, "\n#{indent}\\1")
-    indent + msg
+    "%s (line %d):\n<<<\n%s\n---\n%s\n>>>\n%s\n===" % [
+      @sample.comment, @sample.line,
+      @sample.input,
+      @sample.output,
+      @result
+    ]
   end
   
   def negative_failure_message
