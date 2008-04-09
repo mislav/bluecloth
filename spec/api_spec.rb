@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'bluecloth'
 
 describe BlueCloth do
   it "should be instantiable" do
