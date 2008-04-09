@@ -5,10 +5,6 @@ describe BlueCloth, 'Markdown processing' do
 
   include SampleLoader
   
-  before(:all) do
-    load_samples
-  end
-
   it "should render HTML without trailing newline" do
     BlueCloth.new('Foo').to_html.should == '<p>Foo</p>'
   end
@@ -18,16 +14,28 @@ describe BlueCloth, 'Markdown processing' do
   end
   
   it "should render all the samples correctly" do
-    @sections.values.each do |samples|
-      samples.each do |sample|
-        sample.should render
-      end
-    end
+    load_samples('all')
+    render_samples
+  end
+  
+  it "should render all the failing samples" do
+    load_samples('failing')
+    render_samples
   end
 
-  def render
-    SampleMatcher.new
-  end
+  protected
+  
+    def render
+      SampleMatcher.new
+    end
+
+    def render_samples
+      @sections.values.each do |samples|
+        samples.each do |sample|
+          sample.should render
+        end
+      end
+    end
 end
 
 class SampleMatcher
@@ -42,13 +50,16 @@ class SampleMatcher
   end
   
   def failure_message
-    <<-MSG
+    msg = <<-MSG
     #{@sample.comment} (line #{@sample.line}):
     <<<
     #{@sample.input}---
     #{@sample.output}>>>
     #{@result}===
     MSG
+    indent = ' ' * 4
+    msg.gsub!(/\n(\S)/, "\n#{indent}\\1")
+    indent + msg
   end
   
   def negative_failure_message

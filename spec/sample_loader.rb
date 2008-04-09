@@ -1,6 +1,9 @@
 module SampleLoader
   protected
-  def load_samples
+  def load_samples(name)
+    samples_file = File.dirname(__FILE__) + '/samples/' + name
+    raise ArgumentError, %[no samples file for "#{name}"] unless File.exists? samples_file
+    
     meta_space = true
     section = section_name = sample = nil
     linenum = 0
@@ -8,7 +11,7 @@ module SampleLoader
     @sections = Hash.new { |h, k| h[k] = [] }
 
     begin
-      File.foreach(File.dirname(__FILE__) + '/samples/all') do |line|
+      File.foreach(samples_file) do |line|
         linenum += 1
 
         # Start off in the meta section, which has sections and
@@ -44,6 +47,9 @@ module SampleLoader
           # Right angles terminate a data section, at which point we
           # should have enough data to add a test.
           when /^>>>/
+            unless section
+              section = @sections['[no name]']
+            end
             section << sample
             sample = nil
             meta_space = true
