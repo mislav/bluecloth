@@ -1,7 +1,7 @@
 BlueCloth
 =========
 
-<i>Forked by <b>Mislav</b> <mislav.marohnic@gmail.com> on April 9, 2008</i>
+<i>Forked by <a href="http://github.com/mislav"><strong>Mislav</strong></a> on April 9, 2008</i>
 
 This is **a fork of BlueCloth 1.0.0** (2004/08/24) from [its
 trunk](svn://deveiate.org/BlueCloth/trunk). It's been created to finally fix
