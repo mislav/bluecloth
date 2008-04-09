@@ -1,8 +1,23 @@
-
 BlueCloth
 =========
 
-Version 1.0.0 - 2004/08/24
+<i>Forked by <b>Mislav</b> <mislav.marohnic@gmail.com> on April 9, 2008</i>
+
+This is **a fork of BlueCloth 1.0.0** (2004/08/24) from [its
+trunk](svn://deveiate.org/BlueCloth/trunk). It's been created to finally fix
+some of the outstanding bugs in its abandoned implementation.
+
+The plan is to first clean up the messy test suite (using RSpec), make existing
+tests pass (a lot of them fail right now) and, finally, add tests for annoying
+bugs and making them pass also. Feel free to help out.
+
+I also want to break down its implementation not to be entirely contained in
+one file ("lib/bluecloth.rb") anymore. Together with a nicer test suite, that
+will probably make it easier to maintain.
+
+
+About
+-----
 
 Original version by John Gruber <http://daringfireball.net/>.  
 Ruby port by Michael Granger <http://www.deveiate.org/>.
