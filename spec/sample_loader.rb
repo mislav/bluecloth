@@ -1,6 +1,6 @@
 module SampleLoader
   protected
-  def load_samples(name)
+  def load_samples(name, &block)
     samples_file = File.dirname(__FILE__) + '/samples/' + name
     raise ArgumentError, %[no samples file for "#{name}"] unless File.exists? samples_file
     
@@ -65,6 +65,12 @@ module SampleLoader
     rescue
       $stderr.puts "error while processing line #{linenum}"
       raise $!
+    end
+
+    if block_given?
+      @sections.values.each do |samples|
+        samples.each &block
+      end
     end
   end
 
