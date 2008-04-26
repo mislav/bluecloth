@@ -1,0 +1,153 @@
+### [Links]
+
+# Inline link, no title
+<<<
+An [example](http://url.com/).
+--- Should become:
+<p>An <a href="http://url.com/">example</a>.</p>
+>>>
+
+# Inline link with title
+<<<
+An [example](http://url.com/ "Check out url.com!").
+--- Should become:
+<p>An <a href="http://url.com/" title="Check out url.com!">example</a>.</p>
+>>>
+
+# Reference-style link, no title
+<<<
+An [example][ex] reference-style link.
+
+[ex]: http://www.bluefi.com/
+--- Should become:
+<p>An <a href="http://www.bluefi.com/">example</a> reference-style link.</p>
+>>>
+
+# Indented (less than tabwidth) reference-style link
+<<<
+An [example][ex] reference-style link.
+
+   [ex]: http://www.bluefi.com/
+--- Should become:
+<p>An <a href="http://www.bluefi.com/">example</a> reference-style link.</p>
+>>>
+
+# Reference-style link with quoted title
+<<<
+An [example][ex] reference-style link.
+
+[ex]: http://www.bluefi.com/ "Check out our air."
+--- Should become:
+<p>An <a href="http://www.bluefi.com/" title="Check out our air.">example</a> reference-style link.</p>
+>>>
+
+# Reference-style link with paren title
+<<<
+An [example][ex] reference-style link.
+
+[ex]: http://www.bluefi.com/ (Check out our air.)
+--- Should become:
+<p>An <a href="http://www.bluefi.com/" title="Check out our air.">example</a> reference-style link.</p>
+>>>
+
+# Reference-style link with one of each (hehe)
+<<<
+An [example][ex] reference-style link.
+
+[ex]: http://www.bluefi.com/ "Check out our air.)
+--- Should become:
+<p>An <a href="http://www.bluefi.com/" title="Check out our air.">example</a> reference-style link.</p>
+>>>
+
+" <- For syntax highlighting
+
+# Reference-style link with intervening space
+<<<
+You can split the [linked part] [ex] from
+the reference part with a single space.
+
+[ex]: http://www.treefrog.com/ "for some reason"
+--- Should become:
+<p>You can split the <a href="http://www.treefrog.com/" title="for some reason">linked part</a> from
+the reference part with a single space.</p>
+>>>
+
+# Reference-style link with intervening space
+<<<
+You can split the [linked part]
+ [ex] from the reference part
+with a newline in case your editor wraps it there, I guess.
+
+[ex]: http://www.treefrog.com/
+--- Should become:
+<p>You can split the <a href="http://www.treefrog.com/">linked part</a> from the reference part
+with a newline in case your editor wraps it there, I guess.</p>
+>>>
+
+# Reference-style anchors
+<<<
+I get 10 times more traffic from [Google] [1] than from
+[Yahoo] [2] or [MSN] [3].
+
+  [1]: http://google.com/        "Google"
+  [2]: http://search.yahoo.com/  "Yahoo Search"
+  [3]: http://search.msn.com/    "MSN Search"
+--- Should become:
+<p>I get 10 times more traffic from <a href="http://google.com/" title="Google">Google</a> than from
+<a href="http://search.yahoo.com/" title="Yahoo Search">Yahoo</a> or <a href="http://search.msn.com/" title="MSN Search">MSN</a>.</p>
+>>>
+
+# Implicit name-link shortcut anchors
+<<<
+I get 10 times more traffic from [Google][] than from
+[Yahoo][] or [MSN][].
+
+  [google]: http://google.com/        "Google"
+  [yahoo]:  http://search.yahoo.com/  "Yahoo Search"
+  [msn]:    http://search.msn.com/    "MSN Search"
+--- Should become:
+<p>I get 10 times more traffic from <a href="http://google.com/" title="Google">Google</a> than from
+<a href="http://search.yahoo.com/" title="Yahoo Search">Yahoo</a> or <a href="http://search.msn.com/" title="MSN Search">MSN</a>.</p>
+>>>
+
+# Inline anchors
+<<<
+I get 10 times more traffic from [Google](http://google.com/ "Google")
+than from [Yahoo](http://search.yahoo.com/ "Yahoo Search") or
+[MSN](http://search.msn.com/ "MSN Search").
+--- Should become:
+<p>I get 10 times more traffic from <a href="http://google.com/" title="Google">Google</a>
+than from <a href="http://search.yahoo.com/" title="Yahoo Search">Yahoo</a> or
+<a href="http://search.msn.com/" title="MSN Search">MSN</a>.</p>
+>>>
+
+# Graceful fail for unclosed brackets (and bug #524)
+<<<
+This is just a [bracket opener; it should fail gracefully.
+--- Should become:
+<p>This is just a [bracket opener; it should fail gracefully.</p>
+>>>
+
+# Unresolved reference-style links (Bug #620)
+<<<
+This is an unresolved [url][1].
+--- Should become:
+<p>This is an unresolved [url][1].</p>
+>>>
+
+
+### [Auto-links]
+
+# Plain HTTP link
+<<<
+This is a reference to <http://www.FaerieMUD.org/>. You should follow it.
+--- Should become:
+<p>This is a reference to <a href="http://www.FaerieMUD.org/">http://www.FaerieMUD.org/</a>. You should follow it.</p>
+>>>
+
+# FTP link
+<<<
+Why not download your very own chandelier from <ftp://ftp.usuc.edu/pub/foof/mir/>?
+--- Should become:
+<p>Why not download your very own chandelier from <a href="ftp://ftp.usuc.edu/pub/foof/mir/">ftp://ftp.usuc.edu/pub/foof/mir/</a>?</p>
+>>>

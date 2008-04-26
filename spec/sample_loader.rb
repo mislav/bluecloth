@@ -1,77 +1,78 @@
 module SampleLoader
   protected
-  def load_samples(name, &block)
-    samples_file = File.dirname(__FILE__) + '/samples/' + name
-    raise ArgumentError, %[no samples file for "#{name}"] unless File.exists? samples_file
+  def load_samples(*names, &block)
+    @sections ||= Hash.new { |h, k| h[k] = [] }
+    loaded_samples = []
     
-    meta_space = true
-    section = section_name = sample = nil
-    linenum = 0
+    for name in names
+      samples_file = File.dirname(__FILE__) + '/samples/' + name
+      unless File.exists? samples_file
+        $stderr.puts %[WARNING: no samples file for "#{name}"] 
+        next
+      end
+      
+      meta_space = true
+      section = section_name = sample = nil
+      linenum = 0
 
-    @sections = Hash.new { |h, k| h[k] = [] }
+      begin
+        File.foreach(samples_file) do |line|
+          linenum += 1
 
-    begin
-      File.foreach(samples_file) do |line|
-        linenum += 1
-
-        # Start off in the meta section, which has sections and
-        # descriptions.
-        if meta_space
-          case line
-          # Left angles switch into data section for the current section
-          # and description.
-          when /^<<</
-            meta_space = false
-            unless sample
-              sample = Sample.new(nil, section_name, linenum)
+          # Start off in the meta section, which has sections and
+          # descriptions.
+          if meta_space
+            case line
+            # Left angles switch into data section for the current section
+            # and description.
+            when /^<<</
+              meta_space = false
+              unless sample
+                sample = Sample.new(nil, section_name, linenum)
+              end
+            # Section headings look like:
+            # ### [Code blocks]
+            when /^### \[([^\]]+)\]/
+              section_name = $1.chomp
+              section = @sections[section_name]
+            # Descriptions look like:
+            # # Para plus code block
+            when /^# (.*)/
+              description = $1.chomp
+              
+              unless sample
+                sample = Sample.new(description, section_name, linenum)
+              else
+                sample.comment << $1.chomp
+              end
             end
-          # Section headings look like:
-          # ### [Code blocks]
-          when /^### \[([^\]]+)\]/
-            section_name = $1.chomp
-            section = @sections[section_name]
-          # Descriptions look like:
-          # # Para plus code block
-          when /^# (.*)/
-            description = $1.chomp
-            
-            unless sample
-              sample = Sample.new(description, section_name, linenum)
-            else
-              sample.comment << $1.chomp
-            end
-          end
-        # Data section has input and expected output parts
-        else
-          case line
-          # Right angles terminate a data section, at which point we
-          # should have enough data to add a test.
-          when /^>>>/
-            unless section
-              section = @sections['[no name]']
-            end
-            section << sample
-            sample = nil
-            meta_space = true
-          # 3-Dashed divider with text divides input from output
-          when /^--- (.+)/
-            sample.end_input
-          # Anything else adds to either input or output
+          # Data section has input and expected output parts
           else
-            sample << line
+            case line
+            # Right angles terminate a data section, at which point we
+            # should have enough data to add a test.
+            when /^>>>/
+              section = @sections['[no name]'] unless section
+              section << sample
+              loaded_samples << sample
+              sample = nil
+              meta_space = true
+            # 3-Dashed divider with text divides input from output
+            when /^--- (.+)/
+              sample.end_input
+            # Anything else adds to either input or output
+            else
+              sample << line
+            end
           end
         end
+      rescue
+        $stderr.puts "error while processing line #{linenum}"
+        raise $!
       end
-    rescue
-      $stderr.puts "error while processing line #{linenum}"
-      raise $!
     end
 
-    if block_given?
-      @sections.values.each do |samples|
-        samples.each &block
-      end
-    end
+    loaded_samples.each &block if block_given?
   end
 
   class Sample

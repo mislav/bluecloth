@@ -1,0 +1,240 @@
+### [Titles]
+
+# setext-style h1
+<<<
+Title Text
+=
+--- Should become:
+<h1>Title Text</h1>
+>>>
+
+<<<
+Title Text
+===
+--- Should become:
+<h1>Title Text</h1>
+>>>
+
+<<<
+Title Text
+==========
+--- Should become:
+<h1>Title Text</h1>
+>>>
+
+# setext-style h2
+<<<
+Title Text
+-
+--- Should become:
+<h2>Title Text</h2>
+>>>
+
+<<<
+Title Text
+---
+--- Should become:
+<h2>Title Text</h2>
+>>>
+
+<<<
+Title Text
+----------
+--- Should become:
+<h2>Title Text</h2>
+>>>
+
+# ATX-style h1
+<<<
+# Title Text
+--- Should become:
+<h1>Title Text</h1>
+>>>
+
+<<<
+# Title Text #
+--- Should become:
+<h1>Title Text</h1>
+>>>
+
+<<<
+# Title Text ###
+--- Should become:
+<h1>Title Text</h1>
+>>>
+
+<<<
+# Title Text #####
+--- Should become:
+<h1>Title Text</h1>
+>>>
+
+# ATX-style h2
+<<<
+## Title Text
+--- Should become:
+<h2>Title Text</h2>
+>>>
+
+<<<
+## Title Text #
+--- Should become:
+<h2>Title Text</h2>
+>>>
+
+<<<
+## Title Text ###
+--- Should become:
+<h2>Title Text</h2>
+>>>
+
+<<<
+## Title Text #####
+--- Should become:
+<h2>Title Text</h2>
+>>>
+
+# ATX-style h3
+<<<
+### Title Text
+--- Should become:
+<h3>Title Text</h3>
+>>>
+
+<<<
+### Title Text #
+--- Should become:
+<h3>Title Text</h3>
+>>>
+
+<<<
+### Title Text ###
+--- Should become:
+<h3>Title Text</h3>
+>>>
+
+<<<
+### Title Text #####
+--- Should become:
+<h3>Title Text</h3>
+>>>
+
+# ATX-style h4
+<<<
+#### Title Text
+--- Should become:
+<h4>Title Text</h4>
+>>>
+
+<<<
+#### Title Text #
+--- Should become:
+<h4>Title Text</h4>
+>>>
+
+<<<
+#### Title Text ###
+--- Should become:
+<h4>Title Text</h4>
+>>>
+
+<<<
+#### Title Text #####
+--- Should become:
+<h4>Title Text</h4>
+>>>
+
+# ATX-style h5
+<<<
+##### Title Text
+--- Should become:
+<h5>Title Text</h5>
+>>>
+
+<<<
+##### Title Text #
+--- Should become:
+<h5>Title Text</h5>
+>>>
+
+<<<
+##### Title Text ###
+--- Should become:
+<h5>Title Text</h5>
+>>>
+
+<<<
+##### Title Text #####
+--- Should become:
+<h5>Title Text</h5>
+>>>
+
+# ATX-style h6
+<<<
+###### Title Text
+--- Should become:
+<h6>Title Text</h6>
+>>>
+
+<<<
+###### Title Text #
+--- Should become:
+<h6>Title Text</h6>
+>>>
+
+<<<
+###### Title Text ###
+--- Should become:
+<h6>Title Text</h6>
+>>>
+
+<<<
+###### Title Text #####
+--- Should become:
+<h6>Title Text</h6>
+>>>
+
+# mixed-style headings
+<<<
+A First Level Header
+====================
+
+A Second Level Header
+---------------------
+
+Now is the time for all good men to come to
+the aid of their country. This is just a
+regular paragraph.
+
+The quick brown fox jumped over the lazy
+dog's back.
+
+### Header 3
+
+> This is a blockquote.
+> 
+> This is the second paragraph in the blockquote.
+>
+> ## This is an H2 in a blockquote
+--- becomes:
+<h1>A First Level Header</h1>
+
+<h2>A Second Level Header</h2>
+
+<p>Now is the time for all good men to come to
+the aid of their country. This is just a
+regular paragraph.</p>
+
+<p>The quick brown fox jumped over the lazy
+dog's back.</p>
+
+<h3>Header 3</h3>
+
+<blockquote>
+    <p>This is a blockquote.</p>
+    
+    <p>This is the second paragraph in the blockquote.</p>
+    
+    <h2>This is an H2 in a blockquote</h2>
+</blockquote>
+>>>

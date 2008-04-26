@@ -6,16 +6,16 @@ describe BlueCloth, 'Markdown processing' do
   extend SampleLoader
   
   it "should render HTML without trailing newline" do
-    BlueCloth.new('Foo').to_html.should == '<p>Foo</p>'
+    markdown('Foo').should == '<p>Foo</p>'
   end
 
   it "should not swallow trailing newline" do
     pending
-    BlueCloth.new("Foo\n").to_html.should == "<p>Foo</p>\n"
+    markdown("Foo\n").should == "<p>Foo</p>\n"
   end
 
   describe 'sample:' do
-    load_samples('all') do |sample|
+    load_samples('all', 'code', 'titles', 'emphasis', 'links', 'lists') do |sample|
       it(sample.comment) { sample.should render }
     end
     
@@ -90,7 +90,7 @@ class SampleMatcher
   end
   
   def failure_message
-    "%s (line %d):\n<<<\n%s\n---\n%s\n>>>\n%s\n===" % [
+    "%s (line %d):\n<<< input:\n%s\n--- expected:\n%s\n>>> actual:\n%s\n===" % [
       @sample.comment, @sample.line,
       @sample.input,
       @sample.output,

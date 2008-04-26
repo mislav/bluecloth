@@ -1,0 +1,152 @@
+### [Emphasis]
+
+# Emphasis (<em>) with asterisks
+<<<
+Use *single splats* for emphasis.
+--- Should become:
+<p>Use <em>single splats</em> for emphasis.</p>
+>>>
+
+# Emphasis (<em>) with underscores
+<<<
+Use *underscores* for emphasis.
+--- Should become:
+<p>Use <em>underscores</em> for emphasis.</p>
+>>>
+
+# Strong emphasis (<strong>) with asterisks
+<<<
+Use **double splats** for more emphasis.
+--- Should become:
+<p>Use <strong>double splats</strong> for more emphasis.</p>
+>>>
+
+# Strong emphasis (<strong>) with underscores
+<<<
+Use __doubled underscores__ for more emphasis.
+--- Should become:
+<p>Use <strong>doubled underscores</strong> for more emphasis.</p>
+>>>
+
+# Combined emphasis types 1
+<<<
+Use *single splats* or _single unders_ for normal emphasis.
+--- Should become:
+<p>Use <em>single splats</em> or <em>single unders</em> for normal emphasis.</p>
+>>>
+
+# Combined emphasis types 2
+<<<
+Use _single unders_ for normal emphasis
+or __double them__ for strong emphasis.
+--- Should become:
+<p>Use <em>single unders</em> for normal emphasis
+or <strong>double them</strong> for strong emphasis.</p>
+>>>
+
+# Emphasis containing escaped metachars
+<<<
+You can include literal *\*splats\** by escaping them.
+--- Should become:
+<p>You can include literal <em>*splats*</em> by escaping them.</p>
+>>>
+
+# Two instances of asterisked emphasis on one line
+<<<
+If there's *two* splatted parts on a *single line* it should still work.
+--- Should become:
+<p>If there's <em>two</em> splatted parts on a <em>single line</em> it should still work.</p>
+>>> 
+
+# Two instances of double asterisked emphasis on one line
+<<<
+This **doubled** one should **work too**.
+--- Should become:
+<p>This <strong>doubled</strong> one should <strong>work too</strong>.</p>
+>>> 
+
+# Two instances of underscore emphasis on one line
+<<<
+If there's _two_ underbarred parts on a _single line_ it should still work.
+--- Should become:
+<p>If there's <em>two</em> underbarred parts on a <em>single line</em> it should still work.</p>
+>>> 
+
+# Two instances of doubled underscore emphasis on one line
+<<<
+This __doubled__ one should __work too__.
+--- Should become:
+<p>This <strong>doubled</strong> one should <strong>work too</strong>.</p>
+>>> 
+
+# Initial emphasis (asterisk)
+<<<
+*Something* like this should be bold.
+--- Should become:
+<p><em>Something</em> like this should be bold.</p>
+>>>
+
+# Initial emphasis (underscore)
+<<<
+_Something_ like this should be bold.
+--- Should become:
+<p><em>Something</em> like this should be bold.</p>
+>>>
+
+# Initial strong emphasis (asterisk)
+<<<
+**Something** like this should be bold.
+--- Should become:
+<p><strong>Something</strong> like this should be bold.</p>
+>>>
+
+# Initial strong emphasis (underscore)
+<<<
+__Something__ like this should be bold.
+--- Should become:
+<p><strong>Something</strong> like this should be bold.</p>
+>>>
+
+# Partial-word emphasis (Bug #568)
+<<<
+**E**xtended **TURN**
+--- Should become:
+<p><strong>E</strong>xtended <strong>TURN</strong></p>
+>>>
+
+# Double underscores in words shouldn't create emphasis
+<<<
+assert__no__emphasis
+--- Should become:
+<p>assert__no__emphasis</p>
+>>>
+
+# Asterisks in words should create emphasis
+<<<
+we**have**emphasis and we*like*it
+--- Should become:
+<p>we<strong>have</strong>emphasis and we<em>like</em>it</p>
+>>>
+
+# Ruby methods don't create emphasis
+<<<
+Here I am mentioning will_paginate and paginated_each methods.
+People seem to like acts_as_ferret for indexing.
+--- Should become:
+<p>Here I am mentioning will_paginate and paginated_each methods.
+People seem to like acts_as_ferret for indexing.</p>
+>>>
+
+# Ruby methods in CODE spans don't create emphasis
+<<<
+Here I am mentioning `will_paginate` and `paginated_each` methods.
+--- Should become:
+<p>Here I am mentioning <code>will_paginate</code> and <code>paginated_each</code> methods.</p>
+>>>
+
+# should be able to emphasise a Ruby method with underscores
+<<<
+_acts_as_ferret_
+--- Should become:
+<p><em>acts_as_ferret</em></p>
+>>>

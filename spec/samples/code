@@ -1,0 +1,177 @@
+### [Code spans]
+
+# Single backtick
+<<<
+Making `code` work for you
+--- Should become:
+<p>Making <code>code</code> work for you</p>
+>>>
+
+# Literal backtick with doubling
+<<<
+Making `` `code` `` work for you
+--- Should become:
+<p>Making <code>`code`</code> work for you</p>
+>>>
+
+# Many repetitions
+<<<
+Making `````code````` work for you
+--- Should become:
+<p>Making <code>code</code> work for you</p>
+>>>
+
+# Two in a row
+<<<
+This `thing` should be `two` spans.
+--- Should become:
+<p>This <code>thing</code> should be <code>two</code> spans.</p>
+>>>
+
+# At the beginning of a newline
+<<<
+I should think that the
+`tar` command would be universal.
+--- Should become:
+<p>I should think that the
+<code>tar</code> command would be universal.</p>
+>>>
+
+# Entity escaping
+<<<
+The left angle-bracket (`&lt;`) can also be written as a decimal-encoded
+(`&#060;`) or hex-encoded (`&#x3c;`) entity.
+--- Should become:
+<p>The left angle-bracket (<code>&amp;lt;</code>) can also be written as a decimal-encoded
+(<code>&amp;#060;</code>) or hex-encoded (<code>&amp;#x3c;</code>) entity.</p>
+>>>
+
+# At the beginning of a document (Bug #525)
+<<<
+`world` views
+--- Should become:
+<p><code>world</code> views</p>
+>>>
+
+
+### [Code blocks]
+
+# Para plus code block (literal tab)
+<<<
+This is a chunk of code:
+
+	some.code > some.other_code
+
+Some stuff.
+--- Should become:
+<p>This is a chunk of code:</p>
+
+<pre><code>some.code &gt; some.other_code
+</code></pre>
+
+<p>Some stuff.</p>
+>>>
+
+# Para plus code block (literal tab, no colon)
+<<<
+This is a chunk of code
+
+	some.code > some.other_code
+
+Some stuff.
+--- Should become:
+<p>This is a chunk of code</p>
+
+<pre><code>some.code &gt; some.other_code
+</code></pre>
+
+<p>Some stuff.</p>
+>>>
+
+# Para plus code block (tab-width spaces)
+<<<
+This is a chunk of code:
+
+    some.code > some.other_code
+
+Some stuff.
+--- Should become:
+<p>This is a chunk of code:</p>
+
+<pre><code>some.code &gt; some.other_code
+</code></pre>
+
+<p>Some stuff.</p>
+>>>
+
+# Para plus code block (tab-width spaces, no colon)
+<<<
+This is a chunk of code
+
+    some.code > some.other_code
+
+Some stuff.
+--- Should become:
+<p>This is a chunk of code</p>
+
+<pre><code>some.code &gt; some.other_code
+</code></pre>
+
+<p>Some stuff.</p>
+>>>
+
+# Colon with preceeding space
+<<<
+A regular paragraph, without a colon. :
+
+    This is a code block.
+
+Some stuff.
+--- Should become:
+<p>A regular paragraph, without a colon. :</p>
+
+<pre><code>This is a code block.
+</code></pre>
+
+<p>Some stuff.</p>
+>>>
+
+# Single colon
+<<<
+:
+	
+	some.code > some.other_code
+
+Some stuff.
+--- Should become:
+<p>:</p>
+
+<pre><code>some.code &gt; some.other_code
+</code></pre>
+
+<p>Some stuff.</p>
+>>>
+
+# Preserve leading whitespace (Bug #541)
+<<<
+Examples:
+
+          # (Waste character because first line is flush left !!!)
+          # Example script1
+          x = 1
+          x += 1
+          puts x
+
+Some stuff.
+--- Should become:
+<p>Examples:</p>
+
+<pre><code>      # (Waste character because first line is flush left !!!)
+      # Example script1
+      x = 1
+      x += 1
+      puts x
+</code></pre>
+
+<p>Some stuff.</p>
+>>>
