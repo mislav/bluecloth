@@ -150,3 +150,21 @@ _acts_as_ferret_
 --- Should become:
 <p><em>acts_as_ferret</em></p>
 >>>
+
+# no emphasis when underscores and asterisks are surrounded by spaces
+<<<
+There * is no emphasis * here.
+Also _ no emphasis _ here.
+--- becomes:
+<p>There * is no emphasis * here.
+Also _ no emphasis _ here.</p>
+>>>
+
+# double asterisks or underscores surrounded by spaces create <em>
+<<<
+This is ** a very weird ** feature.
+I don't think __ this should be __ in.
+--- becomes:
+<p>This is <em>* a very weird *</em> feature.
+I don't think <em>_ this should be _</em> in.</p>
+>>>

@@ -1,47 +1,38 @@
 #!/usr/bin/ruby
-#
-# = bluecloth
-#
 # Format one or more text files with the markdown formatter.
-#
-# = Synopsis
 #
 #   bluecloth [OPTIONS] [FILES]
 #
-# 
-#
+require 'optparse'
+$:.unshift File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
+require 'bluecloth'
 
-BEGIN {
-	require 'bluecloth'
-	require 'optparse'
-}
-
-DocumentWrapper = %{
-<html>
-  <head><title>%s</title></head>
+DocumentWrapper = %{<html>
+  <head>
+    <title>%s</title>
+  </head>
   <body>
-%s
+    %s
   </body>
-</html>
-}
+</html>}
 
-def main
-	fragment = false
+begin
+	document = false
 	destination = '.'
 
 	ARGV.options do |oparser|
 
-		oparser.banner = "Usage: #$0 [OPTIONS] FILES"
+		oparser.banner = "Usage: $0 [OPTIONS] FILES"
 
 		# Debug mode
 		oparser.on( "--debug", "-d", TrueClass, "Turn debugging output on" ) {
 			$DEBUG = true
 		}
 
-		# 'Fragment' mode
-		oparser.on( "--fragment", "-f", TrueClass,
-			"Output HTML fragments instead of whole documents" ) {
-			fragment = true
+		# Document mode
+		oparser.on( "--document", "-c", TrueClass,
+			"Wrap resulting HTML creating a basic HTML document" ) {
+			document = true
 		}
 
 		# Output destination
@@ -56,28 +47,29 @@ def main
 	# Filter mode if no arguments
 	ARGV.push( "-" ) if ARGV.empty?
 
-	ARGV.each {|file|
-		if file == '-'
-			contents = $stdin.readlines(nil)
+	ARGV.each do |file|
+		contents = if file == '-'
+        $stdin.read
+      else
+        File::read file
+      end
+
+		bc = BlueCloth::new contents
+    html = bc.to_html
+
+		out = unless document
+			html
 		else
-			contents = File::readlines( file, nil )
+			DocumentWrapper % [
+        file,
+        html.gsub("\n", "\n    ") # indent 4 spaces
+      ]
 		end
 
-		bc = BlueCloth::new( contents.join )
-
-		if fragment
-			$stdout.puts bc.to_html
-		else
-			$stdout.puts DocumentWrapper % [ file, bc.to_html ]
-		end
-	}
+    $stdout.puts out
+  end
 
 rescue => err
 	$stderr.puts "Aborting: Fatal error: %s" % err.message
 	exit 255
 end
-
-
-
-main
-
