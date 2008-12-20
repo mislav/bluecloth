@@ -19,10 +19,16 @@ module BlueCloth::Transform
 	end
   
 	# Pattern to match strong emphasis in Markdown text
-	BoldRegexp = %r{ (\*\*|__) (\S|\S.+?\S) \1 }x
-
+	BoldRegexps = [
+	  %r{ \b(\_\_) (\S|\S.*?\S) \1\b }x,
+	  %r{ (\*\*) (\S|\S.*?\S) \1 }x
+  ]
+  
 	# Pattern to match normal emphasis in Markdown text
-	ItalicRegexp = %r{ (\*|_) (\S|\S.+?\S) \1 }x
+	ItalicRegexps = [
+	  %r{ (\*) (\S|\S.*?\S) \1 }x,
+	  %r{ \b(_) (\S|\S.*?\S) \1\b }x
+	]
 
 	# Transform italic- and bold-encoded text in a copy of the specified +str+
 	# and return it.
@@ -30,8 +36,10 @@ module BlueCloth::Transform
 		@log.debug " Transforming italic and bold"
 
 		str.
-			gsub( BoldRegexp, %{<strong>\\2</strong>} ).
-			gsub( ItalicRegexp, %{<em>\\2</em>} )
+			gsub( BoldRegexps[0], %{<strong>\\2</strong>} ).
+			gsub( BoldRegexps[1], %{<strong>\\2</strong>} ).
+			gsub( ItalicRegexps[0], %{<em>\\2</em>} ).
+			gsub( ItalicRegexps[1], %{<em>\\2</em>} )
 	end
 
 	# Transform backticked spans into <code> spans.
