@@ -1,9 +1,4 @@
-require 'rubygems'
-gem 'rspec', '~> 1.1.3'
-require 'spec'
-# gem 'mocha', '~> 0.5.6'
-# require 'mocha'
-
+require 'spec/autorun'
 require 'bluecloth'
 
 module BlueClothHelper
