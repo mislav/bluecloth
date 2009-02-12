@@ -48,3 +48,18 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.options << '--inline-source'
   rdoc.options << '--charset=UTF-8'
 end
+
+begin
+  require 'jeweler'
+rescue LoadError
+  $stderr.puts "Jeweler not available (gem install technicalpickles-jeweler)"
+else
+  Jeweler::Tasks.new do |gem|
+    gem.name = "bluecloth"
+    gem.summary = "A Ruby implementation of Markdown"
+    gem.email = "mislav.marohnic@gmail.com"
+    gem.homepage = "http://github.com/mislav/bluecloth"
+    gem.description = "Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML)."
+    gem.authors = ["Michael Granger", "Mislav Marohnić"]
+  end
+end

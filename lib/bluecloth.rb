@@ -50,13 +50,13 @@
 # * Put the StringScanner in the render state for thread-safety.
 
 require 'logger'
+require 'yaml'
 
-# BlueCloth is a Ruby implementation of Markdown, a text-to-HTML conversion
-# tool.
+# BlueCloth is a Ruby implementation of Markdown, a text-to-HTML conversion tool.
 class BlueCloth
   
-	# Release Version
-	Version = '0.0.3'
+	version_hash = YAML::load(File.read(File.join(File.dirname(__FILE__), '..', 'VERSION.yml')))
+	Version = [:major, :minor, :patch].map { |bit| version_hash[bit] }.join('.')
 
 	# Create a new BlueCloth string.
 	def initialize(content = "", *restrictions)
