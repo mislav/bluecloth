@@ -72,7 +72,7 @@ module SampleLoader
       end
     end
 
-    loaded_samples.each &block if block_given?
+    loaded_samples.each(&block) if block_given?
   end
 
   class Sample

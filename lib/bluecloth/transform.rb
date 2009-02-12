@@ -28,7 +28,7 @@ module BlueCloth::Transform
 		end
 
 		# Simplify blank lines
-		text.gsub! /^ +$/, ''
+		text.gsub!(/^ +$/, '')
 		@log.debug "Tabs -> spaces/blank lines stripped: %p" % text
 
 		# Replace HTML blocks with placeholders
