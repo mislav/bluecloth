@@ -2,6 +2,6 @@
 
   * bin/bluecloth doesn't add <html><body> tags by default; instead it's opt-in
   * deleted legacy files (tests/, test.rb, docs/, experiments/, install.rb, ...)
-  * break lib/bluecloth.rb into submodules under lib/transform/
+  * break lib/bluecloth.rb into submodules under lib/bluecloth/transform
   * converted tests to specs, cleaner suite
   * import latest original Markdown.pl for reference (and testing)
