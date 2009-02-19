@@ -1,4 +1,5 @@
 require 'spec/autorun'
+require 'sample_loader'
 require 'bluecloth'
 
 module BlueClothHelper

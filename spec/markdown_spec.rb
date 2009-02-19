@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'sample_loader'
 
 describe BlueCloth, 'Markdown processing' do
 

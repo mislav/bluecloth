@@ -1,12 +1,16 @@
 module SampleLoader
   protected
+  
+  def sample_file(name)
+    File.dirname(__FILE__) + '/samples/' + name
+  end
+  
   def load_samples(*names, &block)
     @sections ||= Hash.new { |h, k| h[k] = [] }
     loaded_samples = []
     
     for name in names
-      samples_file = File.dirname(__FILE__) + '/samples/' + name
-      unless File.exists? samples_file
+      unless File.exists?(file = sample_file(name))
         $stderr.puts %[WARNING: no samples file for "#{name}"] 
         next
       end
@@ -16,7 +20,7 @@ module SampleLoader
       linenum = 0
 
       begin
-        File.foreach(samples_file) do |line|
+        File.foreach(file) do |line|
           linenum += 1
 
           # Start off in the meta section, which has sections and
