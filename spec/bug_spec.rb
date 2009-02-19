@@ -37,4 +37,10 @@ describe BlueCloth, 'bugs' do
     end
 	end
 	
+	it "should generate error when parsing malformed HTML" do
+	 lambda {
+	   markdown("<level1 <level2> some text >")
+	 }.should raise_error(RuntimeError)
+	end
+	
 end
