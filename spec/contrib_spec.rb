@@ -18,83 +18,40 @@ describe "contrib test case" do
 
 	### HTML filter options contributed by Florian Gross.
 
-	# Test the :filter_html restriction
   it "should filter HTML" do
     bc = bluecloth DangerousHtml, :filter_html
-
-		# Accessors
-		bc.filter_html.should == true
-		bc.filter_styles.should be_nil
-
-		# Test rendering with filters on
-		bc.to_html.should == DangerousHtmlOutput
-
-		# Test setting it in a sub-array
-    bc = bluecloth DangerousHtml, [:filter_html]
 		
-		# Accessors
-		bc.filter_html.should == true
 		bc.filter_styles.should be_nil
+		bc.filter_html.should be_true
 
-		# Test rendering with filters on
 		bc.to_html.should == DangerousHtmlOutput
 	end
 
-
-	# Test the :filter_styles restriction
   it "should filter styles" do
-    pending
-		rval = bc = nil
-
-		# Test as a 1st-level param
-		assert_nothing_raised {
-			bc = BlueCloth::new( DangerousHtml, :filter_styles )
-		}
-		assert_instance_of BlueCloth, bc
+		bc = bluecloth DangerousHtml, :filter_styles
 		
-		# Accessors
-		assert_nothing_raised { rval = bc.filter_styles }
-		assert_equal true, rval
-		assert_nothing_raised { rval = bc.filter_html }
-		assert_equal nil, rval
+		bc.filter_styles.should be_true
+		bc.filter_html.should be_nil
 
-		# Test rendering with filters on
-		assert_nothing_raised { rval = bc.to_html }
-		assert_equal DangerousStylesOutput, rval
-
-		# Test setting it in a subarray
-		assert_nothing_raised {
-			bc = BlueCloth::new( DangerousHtml, [:filter_styles] )
-		}
-		assert_instance_of BlueCloth, bc
-
-		# Accessors
-		assert_nothing_raised { rval = bc.filter_styles }
-		assert_equal true, rval
-		assert_nothing_raised { rval = bc.filter_html }
-		assert_equal nil, rval
-
-		# Test rendering with filters on
-		assert_nothing_raised { rval = bc.to_html }
-		assert_equal DangerousStylesOutput, rval
-
+		bc.to_html.should == DangerousStylesOutput
 	end
 
+  it "should filter styles given an array" do
+    bc = bluecloth DangerousHtml, [:filter_styles]
+		
+		bc.filter_styles.should be_true
+		bc.filter_html.should be_nil
 
-	# Test to be sure filtering when there's no opening angle brackets doesn't
-	# die.
+		bc.to_html.should == DangerousStylesOutput
+	end
+
   it "should filter 'no less than'" do
-    pending
-		rval = bc = nil
+		bc = bluecloth NoLessThanHtml, :filter_html
+		
+		bc.filter_styles.should be_nil
+		bc.filter_html.should be_true
 
-		# Test as a 1st-level param
-		assert_nothing_raised {
-			bc = BlueCloth::new( NoLessThanHtml, :filter_html )
-		}
-		assert_instance_of BlueCloth, bc
-
-		assert_nothing_raised { rval = bc.to_html }
-		assert_equal NoLessThanOutput, rval
+		bc.to_html.should == NoLessThanOutput
 	end
 
 end
